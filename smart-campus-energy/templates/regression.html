@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="note">Random Forest Regressor predicting <b>energy_consumption_kwh</b>. Category, cost and CO₂ columns are excluded to prevent data leakage.</div>
+
+<div class="grid g4">
+  <div class="card kpi"><div class="label">MAE</div><div class="value" id="m-mae">-</div></div>
+  <div class="card kpi"><div class="label">RMSE</div><div class="value" id="m-rmse">-</div></div>
+  <div class="card kpi"><div class="label">R² Score</div><div class="value" id="m-r2">-</div></div>
+  <div class="card kpi"><div class="label">Test Records</div><div class="value" id="m-n">-</div></div>
+</div>
+<p class="muted small" id="m-info"></p>
+
+<div class="grid g2">
+  <div class="card"><h3>Actual vs Predicted Energy <small>(kWh, test sample)</small></h3><div class="chart-box tall"><canvas id="c-scatter"></canvas></div></div>
+  <div class="card"><h3>Prediction Error / Residuals <small>(actual − predicted)</small></h3><div class="chart-box tall"><canvas id="c-resid"></canvas></div></div>
+  <div class="card"><h3>Energy Trend by Hour <small>(test set, avg kWh)</small></h3><div class="chart-box tall"><canvas id="c-trend"></canvas></div></div>
+  <div class="card"><h3>Feature Importance</h3><div class="chart-box tall"><canvas id="c-imp"></canvas></div></div>
+</div>
+
+<div class="card">
+  <h3>Predict Energy</h3>
+  <form id="predict-form">
+    <div class="form-grid">
+      <div><label for="building_type">Building Type</label><select id="building_type"></select></div>
+      <div><label for="floor_area_sqft">Floor Area (sq ft)</label><input type="number" id="floor_area_sqft" min="1" step="1" required></div>
+      <div><label for="temperature_c">Temperature (°C)</label><input type="number" id="temperature_c" step="0.1" required></div>
+      <div><label for="humidity_pct">Humidity (%)</label><input type="number" id="humidity_pct" step="0.1" required></div>
+      <div><label for="occupancy_pct">Occupancy (%)</label><input type="number" id="occupancy_pct" step="0.1" required></div>
+      <div><label for="hvac_usage_pct">HVAC Usage (%)</label><input type="number" id="hvac_usage_pct" step="0.1" required></div>
+      <div><label for="lighting_usage_pct">Lighting Usage (%)</label><input type="number" id="lighting_usage_pct" step="0.1" required></div>
+      <div><label for="hour">Hour (0–23)</label><input type="number" id="hour" min="0" max="23" step="1" required></div>
+    </div>
+    <button class="btn" type="submit">Predict Energy</button>
+  </form>
+  <div class="result" id="result" hidden></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/regression.js') }}"></script>{% endblock %}

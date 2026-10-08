@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="margin-bottom:16px">
+  <div class="filters">
+    <div>
+      <label>Number of clusters (K)</label>
+      <div class="k-buttons" id="k-buttons">
+        <button class="btn" type="button" data-k="2">K = 2</button>
+        <button class="btn active" type="button" data-k="3">K = 3</button>
+        <button class="btn" type="button" data-k="4">K = 4</button>
+        <button class="btn" type="button" data-k="5">K = 5</button>
+      </div>
+    </div>
+  </div>
+  <p class="muted small" style="margin:12px 0 0">Features (standardised before clustering): temperature_c, occupancy_pct, hvac_usage_pct, lighting_usage_pct, energy_consumption_kwh.</p>
+</div>
+
+<div class="grid g4">
+  <div class="card kpi"><div class="label">Records Clustered</div><div class="value" id="c-records">-</div></div>
+  <div class="card kpi"><div class="label">Clusters</div><div class="value" id="c-k">-</div></div>
+  <div class="card kpi"><div class="label">Silhouette Score</div><div class="value" id="c-sil">-</div></div>
+  <div class="card kpi"><div class="label">Inertia (WCSS)</div><div class="value" id="c-inertia">-</div></div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <h3>Cluster Summary &amp; Characteristics</h3>
+  <div class="table-wrap"><table id="c-table"></table></div>
+</div>
+
+<div class="grid g3">
+  <div class="card"><h3>Cluster Visualization <small id="pca-note">(PCA projection)</small></h3><div class="chart-box"><canvas id="c-scatter"></canvas></div></div>
+  <div class="card"><h3>Average Energy by Cluster <small>(kWh)</small></h3><div class="chart-box"><canvas id="c-energy"></canvas></div></div>
+  <div class="card"><h3>Average Occupancy by Cluster <small>(%)</small></h3><div class="chart-box"><canvas id="c-occ"></canvas></div></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/clustering.js') }}"></script>{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title }} | Smart Campus Energy</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">⚡ Smart Campus Energy</div>
+    <nav>
+      <a href="{{ url_for('dashboard') }}" class="{{ 'active' if page == 'dashboard' }}">Dashboard</a>
+      <a href="{{ url_for('analysis') }}" class="{{ 'active' if page == 'analysis' }}">Data Analysis</a>
+      <div class="nav-label">DWM CONCEPTS</div>
+      <a href="{{ url_for('preprocessing_page') }}" class="{{ 'active' if page == 'preprocessing' }}">Preprocessing</a>
+      <a href="{{ url_for('association') }}" class="{{ 'active' if page == 'association' }}">Association Rules</a>
+      <a href="{{ url_for('classification_page') }}" class="{{ 'active' if page == 'classification' }}">J48 Classification</a>
+      <a href="{{ url_for('regression_page') }}" class="{{ 'active' if page == 'regression' }}">Regression</a>
+      <a href="{{ url_for('clustering_page') }}" class="{{ 'active' if page == 'clustering' }}">K-Means Clustering</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="page-head">
+      <h1>{{ page_title }}</h1>
+      <p>{{ page_subtitle }}</p>
+    </header>
+    <div id="error" class="alert" hidden></div>
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>window.Chart || document.write('<script src="{{ url_for("static", filename="js/vendor/chart.umd.min.js") }}"><\/script>')</script>
+  <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

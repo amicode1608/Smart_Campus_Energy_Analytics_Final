@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="grid g5">
+  <div class="card kpi"><div class="label">Total Records</div><div class="value" id="s-records">-</div></div>
+  <div class="card kpi"><div class="label">Number of Buildings</div><div class="value" id="s-buildings">-</div></div>
+  <div class="card kpi"><div class="label">Peak Consumption Hour</div><div class="value" id="s-peak">-</div></div>
+  <div class="card kpi"><div class="label">Highest Consuming Building</div><div class="value" id="s-high" style="font-size:16px">-</div></div>
+  <div class="card kpi"><div class="label">Lowest Consuming Building</div><div class="value" id="s-low" style="font-size:16px">-</div></div>
+</div>
+<div class="grid g4">
+  <div class="card kpi"><div class="label">Average Temperature</div><div class="value" id="s-temp">-</div></div>
+  <div class="card kpi"><div class="label">Average Occupancy</div><div class="value" id="s-occ">-</div></div>
+  <div class="card kpi"><div class="label">Total Cost</div><div class="value" id="s-cost">-</div></div>
+  <div class="card kpi"><div class="label">Total CO₂</div><div class="value" id="s-co2">-</div></div>
+</div>
+
+<div class="grid g2">
+  <div class="card"><h3>Monthly Trend <small>(total kWh)</small></h3><div class="chart-box"><canvas id="a-monthly"></canvas></div></div>
+  <div class="card"><h3>Hourly Trend <small>(avg kWh)</small></h3><div class="chart-box"><canvas id="a-hourly"></canvas></div></div>
+  <div class="card"><h3>Building Comparison <small>(total kWh)</small></h3><div class="chart-box"><canvas id="a-building"></canvas></div></div>
+  <div class="card"><h3>Cost by Building <small>(₹)</small></h3><div class="chart-box"><canvas id="a-cost"></canvas></div></div>
+  <div class="card"><h3>CO₂ by Building <small>(kg)</small></h3><div class="chart-box"><canvas id="a-co2"></canvas></div></div>
+  <div class="card"><h3>Occupancy vs Energy <small>(avg kWh)</small></h3><div class="chart-box"><canvas id="a-occ"></canvas></div></div>
+  <div class="card"><h3>Temperature vs Energy <small>(avg kWh)</small></h3><div class="chart-box"><canvas id="a-temp"></canvas></div></div>
+  <div class="card"><h3>HVAC Usage vs Energy <small>(avg kWh)</small></h3><div class="chart-box"><canvas id="a-hvac"></canvas></div></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>{% endblock %}

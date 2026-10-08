@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="note">J48-style Decision Tree: <code>DecisionTreeClassifier(criterion="entropy")</code>, target <b>energy_category</b> (Low / Medium / High).
+  Energy, cost and CO₂ columns are excluded to prevent data leakage.</div>
+
+<div class="grid g4">
+  <div class="card kpi"><div class="label">Accuracy</div><div class="value" id="m-acc">-</div></div>
+  <div class="card kpi"><div class="label">Precision (weighted)</div><div class="value" id="m-prec">-</div></div>
+  <div class="card kpi"><div class="label">Recall (weighted)</div><div class="value" id="m-rec">-</div></div>
+  <div class="card kpi"><div class="label">F1 Score (weighted)</div><div class="value" id="m-f1">-</div></div>
+</div>
+<p class="muted small" id="m-info"></p>
+
+<div class="grid g2">
+  <div class="card"><h3>Confusion Matrix <small>(test set; rows = actual, columns = predicted)</small></h3><div class="table-wrap"><table id="cm" class="cm"></table></div>
+    <h3 style="margin-top:18px">Per-class Metrics</h3><div class="table-wrap"><table id="per-class"></table></div></div>
+  <div class="card"><h3>Feature Importance</h3><div class="chart-box tall"><canvas id="imp-chart"></canvas></div></div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <h3>Decision Tree <small>(top 3 levels)</small></h3>
+  <div class="tree-scroll"><ul class="tree" id="tree"></ul></div>
+</div>
+
+<div class="card">
+  <h3>Predict Energy Category</h3>
+  <form id="predict-form">
+    <div class="form-grid">
+      <div><label for="building_type">Building Type</label><select id="building_type"></select></div>
+      <div><label for="temperature_c">Temperature (°C)</label><input type="number" id="temperature_c" step="0.1" required></div>
+      <div><label for="humidity_pct">Humidity (%)</label><input type="number" id="humidity_pct" step="0.1" required></div>
+      <div><label for="occupancy_pct">Occupancy (%)</label><input type="number" id="occupancy_pct" step="0.1" required></div>
+      <div><label for="hvac_usage_pct">HVAC Usage (%)</label><input type="number" id="hvac_usage_pct" step="0.1" required></div>
+      <div><label for="lighting_usage_pct">Lighting Usage (%)</label><input type="number" id="lighting_usage_pct" step="0.1" required></div>
+      <div><label for="hour">Hour (0–23)</label><input type="number" id="hour" min="0" max="23" step="1" required></div>
+      <div><label for="temperature_level">Temperature Level</label><select id="temperature_level"></select></div>
+      <div><label for="occupancy_level">Occupancy Level</label><select id="occupancy_level"></select></div>
+    </div>
+    <button class="btn" type="submit">Predict Energy Category</button>
+  </form>
+  <div class="result" id="result" hidden></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/classification.js') }}"></script>{% endblock %}
